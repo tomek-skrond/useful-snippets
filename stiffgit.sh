@@ -2,7 +2,7 @@
 
 GIT_REPO="your_account_name"
 GIT_MAIL="your_email"
-SSHKEYS_PATH="path_to_ssh_keys_folder(usually ~/.ssh/)"
+SSHKEYS_PATH=$(realpath "path_to_ssh_keys_folder(usually ~/.ssh/)")
 
 path=$1
 
