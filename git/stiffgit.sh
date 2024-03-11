@@ -1,8 +1,8 @@
 #!/bin/bash
 
-GIT_REPO="your_account_name"
-GIT_MAIL="your_email"
-SSHKEYS_PATH="path_to_ssh_keys_folder(usually ~/.ssh/)"
+GIT_REPO="tomek-skrond"
+GIT_MAIL="tomek2.skrond@gmail.com"
+SSHKEYS_PATH=$(realpath "/home/vagrant/.ssh/")
 
 path=$1
 
