@@ -68,3 +68,26 @@ if [[ "$1" == "push" ]]; then
 		git push origin "$3"
 	fi
 fi
+
+if [[ "$1" == "pull" ]]; then
+        if [[ -z "$3" ]]; then
+                echo "no branch name specified"
+                exit 1
+        fi
+
+	add_key "$2"
+	git pull origin "$3"
+fi
+
+
+
+if [[ "$1" == "custom-command" ]]; then
+	if [[ -z "$3" ]]; then
+		echo "No custom command specified"
+		exit 1
+	fi
+
+	add_key "$2"
+	custom_command="$3"
+	$custom_command
+fi
