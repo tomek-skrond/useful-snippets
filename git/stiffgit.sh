@@ -13,6 +13,7 @@ help() {
 	echo "~/stiffgit.sh add-key <key-path:string-path>"
 	echo "~/stiffgit.sh clone <key-path:string-path> <project-name:string>"
 	echo "~/stiffgit.sh push <key-path:string-path> <branch-name:string> <upstream:string or leave it blank>"
+	echo "~/stiffgit.sh custom-command <key-path:string-path> <custom-cmd:string>"
 
 }
 
