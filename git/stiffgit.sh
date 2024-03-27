@@ -1,13 +1,14 @@
 #!/bin/bash
 
-GIT_REPO="your_account_name"
-GIT_MAIL="your_email"
-SSHKEYS_PATH=$(realpath "path_to_ssh_keys_folder(usually ~/.ssh/)")
+GIT_REPO="your_account_name" #enter your git account name
+GIT_MAIL="your_email" #enter mail for git
+SSHKEYS_PATH=$(realpath "path_to_ssh_keys_folder(usually ~/.ssh/)") #enter path for ssh keys folder
 
-path=$1
+
 
 help() {
 	echo "Available commands:"
+	echo "~/stiffgit.sh configure"
 	echo "~/stiffgit.sh generate <key-name:string>"
 	echo "~/stiffgit.sh add-key <key-path:string-path>"
 	echo "~/stiffgit.sh clone <key-path:string-path> <project-name:string>"
@@ -20,6 +21,24 @@ add_key() {
         ssh-add $1
         ssh -T git@github.com
 }
+
+if [[ "$1" == "configure" ]]; then
+	echo "Configure your script for proper functionality"
+	echo "Enter valid data into GIT_REPO, GIT_MAIL and SSHKEYS_PATH variables"
+	script_path=$(readlink -f "$0")
+	if command -v vim &> /dev/null; then
+		vim +3 "$script_path"
+		exit 1
+	fi
+
+	if command -v nano &> /dev/null; then
+		nano "$script_path" +3
+		exit 1
+	fi
+
+fi
+
+
 
 if [[ "$1" == "help" ]]; then
 	help
@@ -35,11 +54,16 @@ if [[ "$1" == "generate" ]]; then
 fi
 
 if [[ "$1" == "add-key" ]]; then
+
+	if ! [[ -f "${2}" ]]; then
+		echo "File does not exist"
+		exit 1
+	fi
 	cat >> ~/.ssh/config <<EOF
 
 Host *
         AddKeysToAgent yes
-        IdentityFile ${path}
+        IdentityFile ${2}
 EOF
 	add_key "$2"
 fi
