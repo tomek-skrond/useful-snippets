@@ -1,14 +1,16 @@
-#!/bin/bash
+#!/bin/sh
 
-GIT_REPO="your_account_name" #enter your git account name
-GIT_MAIL="your_email" #enter mail for git
-SSHKEYS_PATH=$(realpath "path_to_ssh_keys_folder(usually ~/.ssh/)") #enter path for ssh keys folder
+GIT_REPO="tomek-skrond" #enter your git account name
+GIT_MAIL="tomek2.skrond@gmail.com" #enter mail for git
+SSHKEYS_PATH=$(realpath "/home/tomo/.ssh") #enter path for ssh keys folder
 
 
 
 help() {
 	echo "Available commands:"
 	echo "~/stiffgit.sh configure"
+	echo "~/stiffgit.sh env"
+	echo "~/stiffgit.sh update-config"
 	echo "~/stiffgit.sh generate <key-name:string>"
 	echo "~/stiffgit.sh add-key <key-path:string-path>"
 	echo "~/stiffgit.sh clone <key-path:string-path> <project-name:string>"
@@ -23,9 +25,31 @@ add_key() {
         ssh -T git@github.com
 }
 
+view_config() {
+	echo "Your current configuration is:"
+	echo "GIT USERNAME: $GIT_REPO"
+	echo "GIT EMAIL: $GIT_MAIL"
+	echo "PATH TO SSH KEYS: $SSHKEYS_PATH"
+	echo ""
+	echo "git.config:"
+	git config --list
+}
+
+if [[ "$1" == "env" ]]; then
+	view_config
+fi
+
+if [[ "$1" == "update-config" ]]; then
+	echo "Updating git config with current variables"
+	view_config
+	git config --global user.name "${GIT_REPO}"
+	git config --global user.email "${GIT_MAIL}"
+fi
+
 if [[ "$1" == "configure" ]]; then
 	echo "Configure your script for proper functionality"
 	echo "Enter valid data into GIT_REPO, GIT_MAIL and SSHKEYS_PATH variables"
+	sleep 10
 	script_path=$(readlink -f "$0")
 	if command -v vim &> /dev/null; then
 		vim +3 "$script_path"
