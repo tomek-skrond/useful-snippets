@@ -1,9 +1,8 @@
 #!/bin/sh
 
-GIT_REPO="tomek-skrond" #enter your git account name
-GIT_MAIL="tomek2.skrond@gmail.com" #enter mail for git
-SSHKEYS_PATH=$(realpath "/home/tomo/.ssh") #enter path for ssh keys folder
-
+GIT_REPO="asdfasdasdf" #enter your git account name
+GIT_MAIL="asdfasdf.asdadsfd@gmail.com" #enter mail for git
+SSHKEYS_PATH=$(realpath "/home/asdfadsf/.ssh") #enter path for ssh keys folder
 
 
 help() {
@@ -67,6 +66,29 @@ fi
 
 if [[ "$1" == "help" ]]; then
 	help
+fi
+
+if [[ "$1" == "configure" ]]; then
+	script_path=$(readlink -f "$0")
+	if command -v "vim" &> /dev/null; then
+		vim +3 $script_path
+	elif command -v "nano" &>/dev/null; then
+		nano $script_path +3
+	else
+		echo "No supported editors present, install either nano or vim"
+		exit 1
+	fi
+	
+#	read -p "Do you wish to insert data you entered into git?(y/n)" opt
+#	if [[ "$opt" == "y" ]]; then
+#		git config --global user.email "${GIT_MAIL}"
+#		git config --global user.name "${ACCOUNT_NAME}"
+#
+#		echo "Configured git mail as: ${GIT_MAIL}"
+#		echo "Configured git username as: ${ACCOUNT_NAME}"
+#	else
+#		exit 1
+#	fi
 fi
 
 if [[ "$1" == "generate" ]]; then
